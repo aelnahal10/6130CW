@@ -39,7 +39,68 @@ const VoucherForm = () => {
       alert('Invalid code or code has been used before.');
     }
   };
-
+ return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="hexCode">10-Digit Hex Code:</label>
+      <input
+        type="text"
+        name="hexCode"
+        id="hexCode"
+        value={formData.hexCode}
+        onChange={handleChange}
+        required
+        pattern="^[a-fA-F0-9]{10}$"
+      />
+      <br />
+  
+      <label htmlFor="name">Name:</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+      />
+      <br />
+  
+      <label htmlFor="email">Email:</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        value={formData.email}
+        onChange={handleChange}
+        required
+      />
+      <br />
+  
+      <label htmlFor="address">Address:</label>
+      <input
+        type="text"
+        name="address"
+        id="address"
+        value={formData.address}
+        onChange={handleChange}
+        required
+      />
+      <br />
+  
+      <label htmlFor="bestPlayer">Best Player:</label>
+      <input
+        type="text"
+        name="bestPlayer"
+        id="bestPlayer"
+        value={formData.bestPlayer}
+        onChange={handleChange}
+        required
+      />
+      <br />
+  
+      <button type="submit">Submit</button>
+    </form>
+  );
+  
  
 };
 
