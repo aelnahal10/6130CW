@@ -13,17 +13,6 @@ app.use(bodyParser.json());
 const uri = 'YOUR_MONGODB_CONNECTION_STRING';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-function generateVoucherCode() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const length = 10;
-    let result = '';
-  
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-  
-    return result;
-  }
   
 
 app.post('/api/submit', async (req, res) => {
