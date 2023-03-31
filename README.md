@@ -24,7 +24,7 @@ The application consists of the following components:
 - A static website is served by a single frontend container (frontend). Port 80, which is mapped to host port 8080, is exposed by the container.
 - One backend (backend) container that provides a REST API. Port 3001, which is assigned to host port 8081, is exposed by the container
 - Two Nginx containers that serve as reverse proxies for the frontend and backend containers, respectively: nginx-frontend and nginx-backend. In order to prevent port conflicts, the host ports (8080 and 8081) that port 80 is mapped to on the hosts are distinct.
-
+- Two Nginx containers that acts as a load balancer , one for the presentation tier and one for the business tier.
 The frontend and backend containers are built using the Dockerfiles located in the frontend and backend directories, respectively. The Dockerfiles use Node.js and NPM to install the necessary dependencies and build the application code.
 
 The frontend directory contains a simple React application that displays a message and a button. When the button is clicked, the application makes a request to the backend API to retrieve a random number, which is then displayed on the page.
