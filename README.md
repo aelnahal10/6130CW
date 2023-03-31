@@ -2,7 +2,7 @@
 
 
 README
-This repository contains a Docker Compose file that sets up a web application with a Presentation tier, a business logic tier, and a data tier.
+This repository contains a Docker Compose file that sets up a web application with a Presentation tier, a business logic tier, and a data tier al kan be found in the JSprj.
 
 
 To get started with the application, follow these steps:
