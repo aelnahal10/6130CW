@@ -1,0 +1,100 @@
+version: "3"
+
+services:
+  mongo1:
+   hostname: mongo1
+   container_name: mongo1
+   image: mongo:4.1
+   ports:
+   - "40001:27017"
+   restart: always
+   entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+   networks:
+    - backend-network
+
+  mongo2:
+   hostname: mongo2
+   container_name: mongo2
+   image: mongo:4.1
+   ports:
+    - "40002:27017"
+   restart: always
+   entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+   networks:
+    - backend-network
+  mongo3:
+   hostname: mongo3
+   container_name: mongo3
+   image: mongo:4.1
+   ports:
+    - "40003:27017"
+   restart: always
+   entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+   networks:
+    - backend-network
+   networks:
+    - backend-network
+
+  mongo-config:
+   hostname: mongo-config
+   container_name: mongo-config
+   image: mongo:4.1
+   volumes:
+    - ./scripts/rs-init.sh:/scripts/rs-init.sh
+    - ./scripts/init.js:/scripts/init.js
+   entrypoint: [ "bash" , "/scripts/rs-init.sh" ]
+   networks:
+    - backend-network
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    expose:
+      - "80"
+    networks:
+      - frontend-network
+     
+
+  backend:
+    build: ./backend
+    container_name: backend
+    expose:
+      - "3001"
+    networks:
+      - backend-network
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+
+  nginx-frontend:
+    image: nginx:latest
+    container_name: nginx-frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx-frontend.conf:/etc/nginx/nginx.conf
+    networks:
+      - frontend-network
+    depends_on:
+      - frontend
+
+  nginx-backend:
+    image: nginx:latest
+    container_name: nginx-backend
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx-backend.conf:/etc/nginx/nginx.conf
+    networks:
+      - backend-network
+    depends_on:
+      - backend
+
+networks:
+  frontend-network:
+    driver: bridge
+
+  backend-network:
+    driver: bridge
+
